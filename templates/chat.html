@@ -1,122 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% block styles %}
+<link rel="stylesheet"
+    href="{{ request.url_for('static', path='css/chat.css')}}">
+{% endblock %}
+
     <section class="chat-container bg-white p-4 shadow-sm rounded mx-auto">
+
+            <h1 class="text-center">Chat with the AI</h1>
         <div class="chat-box p-3" id="chat-box"></div>
         <div class="input-group mt-3">
             <input type="text" id="user-input" onkeypress="handleKeyPress(event)" class="form-control ps-2" placeholder="Type a message...">
             <button class="btn btn-primary" id="send_chat" onclick="sendMessage()">Send</button>
         </div>
     </section>
+    
+{% block scripts %}
+<script src="{{ request.url_for('static', path='js/chat.js')}}"></script>
+{% endblock %}
 
-<style>
-    .chat-container {
-        max-width: 800px;
-        width: 100%;
-        height: 80vh;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .chat-box {
-        flex-grow: 1;
-        height: 70vh;
-        overflow-y: auto;
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        background: #f9f9f9;
-        padding: 15px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-    .message {
-        max-width: 75%;
-        padding: 10px 15px;
-        border-radius: 20px;
-        font-size: 14px;
-        display: inline-block;
-        position: relative;
-    }
-    .user {
-        background: purple;
-        color: white;
-        align-self: flex-end;
-    }
-    .user::after {
-        content: "";
-        position: absolute;
-        right: -10px;
-        top: 50%;
-        transform: translateY(-50%);
-        border: 5px solid transparent;
-        border-left-color: purple;
-    }
-    .assistant {
-        background: #e9ecef;
-        align-self: flex-start;
-    }
-    .assistant::after {
-        content: "";
-        position: absolute;
-        left: -10px;
-        top: 50%;
-        transform: translateY(-50%);
-        border: 5px solid transparent;
-        border-right-color: #e9ecef;
-    }
-    #send_chat {
-        margin-left: 10px;
-    }
-    .btn-primary {
-        background-color: purple;
-        border-color: purple;
-    }
-    .btn-primary:hover {
-        background-color: grey;
-        border-color: grey;
-    }
-</style>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-<script>
-    const ws = new WebSocket("ws://localhost:8080/chat");
-    const chatBox = document.getElementById("chat-box");
-    const userInput = document.getElementById("user-input");
-
-    ws.onmessage = (event) => {
-        addMessage(event.data, "assistant");
-    };
-
-    function sendMessage() {
-        const message = userInput.value.trim();
-        if (message) {
-            addMessage(message, "user");
-            ws.send(message);
-            userInput.value = "";
-        }
-    }
-
-    function addMessage(text, role) {
-        const msgDiv = document.createElement("div");
-        msgDiv.className = `message ${role}`;
-        msgDiv.textContent = text;
-        chatBox.appendChild(msgDiv);
-        chatBox.scrollTop = chatBox.scrollHeight;
-
-        anime({
-            targets: msgDiv,
-            opacity: [0, 1],
-            translateY: [20, 0],
-            duration: 500,
-            easing: "easeOutExpo"
-        });
-    }
-
-    function handleKeyPress(event) {
-        if (event.key === "Enter") {
-            sendMessage();
-        }
-    }
-</script>
 {% endblock %}

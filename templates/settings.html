@@ -1,17 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 {% block styles %}
-<style>
-    .btn-primary {
-        background-color: purple;
-        border-color: purple;
-    }
-    .btn-primary:hover {
-        background-color: grey;
-        border-color: grey;
-    }
-</style>
+<link rel="stylesheet"
+    href="{{ request.url_for('static', path='css/settings.css')}}">
 {% endblock %}
 
 <div class="container-fluid">
@@ -43,7 +36,7 @@
         <!-- API Key Configuration -->
         <div class="server-config">
             <div class="server-list border p-3 rounded shadow-sm bg-white">
-                <h4>API Key Configuration</h4>
+                <h4>Open AI Key Configuration</h4>
                 <p>Configure your API key to connect with MCP servers.</p>
 
                 <div class="card p-3 shadow-sm mb-3">
@@ -94,47 +87,9 @@
         </div>
     </div>
 </div>
+
 {% block scripts %}
-<script>
-    function addServer() {
-        const licenseKey = document.getElementById("licenseKey").value;
-        fetch("/save_config", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                licenseKey
-            })
-        })
-        .then(response => response.json())
-        .catch(error => console.error("Error:", error));
-        // Reload the page
-        location.reload();
-    }
-
-    function toggleApiKeyVisibility() {
-        const apiKeyInput = document.getElementById('apiKeyDisplay');
-        const toggleIcon = document.getElementById('toggleIcon');
-
-        if (apiKeyInput.type === 'password') {
-            apiKeyInput.type = 'text';
-            toggleIcon.classList.remove('bi-eye');
-            toggleIcon.classList.add('bi-eye-slash');
-        } else {
-            apiKeyInput.type = 'password';
-            toggleIcon.classList.remove('bi-eye-slash');
-            toggleIcon.classList.add('bi-eye');
-        }
-    }
-
-    function saveWebSocketSettings() {
-        const wsEndpoint = document.getElementById('wsEndpoint').value;
-        // Save to backend or localStorage
-        localStorage.setItem('wsEndpoint', wsEndpoint);
-        alert('WebSocket settings saved!');
-    }
-</script>
+<script src="{{ request.url_for('static', path='js/settings.js')}}"></script>
 {% endblock %}
-
-
 
 {% endblock %}
