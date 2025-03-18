@@ -1,0 +1,16 @@
+{
+    "mcpServers": {
+        "python_server": {
+            "command": "/home/kunal/Workspace/2025/MARCH/10/mcp-server-python-sdk/my-mcp-server/.venv/bin/mcp",
+            "args": ["run", "/home/kunal/Workspace/2025/MARCH/10/mcp-server-python-sdk/my-mcp-server/server.py"]
+        },
+        "node_server": {
+            "command": "/home/kunal/Workspace/2025/MARCH/10/mcp-server-python-sdk/my-mcp-server/.venv/bin/mcp",
+            "args": ["run", "/home/kunal/Workspace/2025/MARCH/10/mcp-server-python-sdk/my-mcp-server/server_sub.py"]
+        },
+        "node_server1": {
+            "command": "/home/kunal/Workspace/2025/MARCH/10/mcp-server-python-sdk/my-mcp-server/.venv/bin/mcp",
+            "args": ["run", "/home/kunal/Workspace/2025/MARCH/10/mcp-server-python-sdk/my-mcp-server/server_sub.py"]
+        }
+    }
+}

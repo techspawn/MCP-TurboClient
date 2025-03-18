@@ -1,0 +1,29 @@
+Folder map of /home/kunal/Workspace/2025/MARCH/14/MCP-TurboClient
+==================================================
+
+├── images/
+│   ├── chat_window.png
+│   └── setting_page.png
+├── models/
+│   ├── __init__.py
+│   ├── client.py
+│   ├── config.py
+│   └── py.typed
+├── static/
+├── templates/
+│   ├── base.html
+│   ├── chat.html
+│   └── settings.html
+├── .env
+├── .gitignore
+├── .python-version
+├── config.json
+├── database.py
+├── folder_structure.txt
+├── LICENSE
+├── main.py
+├── mcp_config.db
+├── pyproject.toml
+├── README.md
+├── requirements.txt
+└── uv.lock

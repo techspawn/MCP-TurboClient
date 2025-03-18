@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% block styles %}
+<style>
+    .btn-primary {
+        background-color: purple;
+        border-color: purple;
+    }
+    .btn-primary:hover {
+        background-color: grey;
+        border-color: grey;
+    }
+</style>
+{% endblock %}
+
+<div class="container-fluid">
+    <div class="content p-4">
+        <h2 class="mb-4">Server Settings</h2>
+
+        <!-- Server Statistics -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="card text-center p-3 shadow-sm">
+                    <h3>Total Servers</h3>
+                    <p class="fs-4">{{ totalcount }}</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center p-3 shadow-sm">
+                    <h3>Stdio Servers</h3>
+                    <p class="fs-4">{{ Stdio_Servers }}</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center p-3 shadow-sm">
+                    <h3>SSE Servers</h3>
+                    <p class="fs-4">{{ SSE_Servers }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Key Configuration -->
+        <div class="server-config">
+            <div class="server-list border p-3 rounded shadow-sm bg-white">
+                <h4>API Key Configuration</h4>
+                <p>Configure your API key to connect with MCP servers.</p>
+
+                <div class="card p-3 shadow-sm mb-3">
+                    <h5>Current API Key</h5>
+                    <div class="input-group">
+                        <input type="password" class="form-control text-center" value="{{ license_key }}" id="apiKeyDisplay" disabled>
+                        <button class="btn btn-outline-secondary" type="button" onclick="toggleApiKeyVisibility()">
+                            <i class="bi bi-eye-fill" id="toggleIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addServerModal">Update API Key</button>
+            </div>
+        </div>
+
+        <!-- Additional Settings Section -->
+        <!-- <div class="additional-settings mt-4">
+            <div class="border p-3 rounded shadow-sm bg-white">
+                <h4>WebSocket Settings</h4>
+                <div class="mb-3">
+                    <label for="wsEndpoint" class="form-label">WebSocket Endpoint</label>
+                    <input type="text" class="form-control" id="wsEndpoint" value="ws://localhost:8080/chat">
+                </div>
+                <button class="btn btn-primary" onclick="saveWebSocketSettings()">Save Settings</button>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+<!-- Add Server Modal -->
+<div class="modal fade" id="addServerModal" tabindex="-1" aria-labelledby="addServerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addServerModalLabel">Update API Key</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="serverForm">
+                    <div class="mb-3">
+                        <label for="licenseKey" class="form-label">License Key</label>
+                        <input type="text" class="form-control" placeholder="{{license_key}}" id="licenseKey" required>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="addServer()">Save API Key</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% block scripts %}
+<script>
+    function addServer() {
+        const licenseKey = document.getElementById("licenseKey").value;
+        fetch("/save_config", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                licenseKey
+            })
+        })
+        .then(response => response.json())
+        .catch(error => console.error("Error:", error));
+        // Reload the page
+        location.reload();
+    }
+
+    function toggleApiKeyVisibility() {
+        const apiKeyInput = document.getElementById('apiKeyDisplay');
+        const toggleIcon = document.getElementById('toggleIcon');
+
+        if (apiKeyInput.type === 'password') {
+            apiKeyInput.type = 'text';
+            toggleIcon.classList.remove('bi-eye');
+            toggleIcon.classList.add('bi-eye-slash');
+        } else {
+            apiKeyInput.type = 'password';
+            toggleIcon.classList.remove('bi-eye-slash');
+            toggleIcon.classList.add('bi-eye');
+        }
+    }
+
+    function saveWebSocketSettings() {
+        const wsEndpoint = document.getElementById('wsEndpoint').value;
+        // Save to backend or localStorage
+        localStorage.setItem('wsEndpoint', wsEndpoint);
+        alert('WebSocket settings saved!');
+    }
+</script>
+{% endblock %}
+
+
+
+{% endblock %}
