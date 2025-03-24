@@ -1,6 +1,6 @@
-# MCP TurboClient [🚀](http://127.0.0.1:8080/#)
+# Turbo MCP Client [🚀](http://127.0.0.1:8080/#)
 
-A FastAPI-based application that provides a web interface for interacting with Multiple Control Protocol (MCP) servers while utilizing OpenAI's API for processing messages.
+A FastAPI-based application that provides a web interface for interacting with Models Context Protocol (MCP) servers while utilizing OpenAI's API for processing messages.
 
 ## Overview
 
@@ -44,14 +44,14 @@ This application allows users to:
 3. Set up your environment variables:
 
    ```bash
-   export MODEL_NAME="gpt-4-turbo" # or your preferred OpenAI model
+   export MODEL_NAME="gpt-4o" # or your preferred OpenAI model
    ```
 
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
 
-`MODEL_NAME=gpt-3.5-turbo`
+`MODEL_NAME=gpt-4o`
 
 ## Configuration
 
