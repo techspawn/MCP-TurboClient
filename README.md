@@ -33,7 +33,7 @@ This application allows users to:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/techspawn/MCP-TurboClient.git
+   git clone https://github.com/techspawn/Turbo-MCP-Client.git
    cd openai-mcp
    ```
 2. Install dependencies:
